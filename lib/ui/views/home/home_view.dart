@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pemilu_mobile/ui/views/home/home_viewmodel.dart';
+import 'package:pemilu_mobile/utils/app_color.dart';
+import 'package:pemilu_mobile/utils/app_text.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,25 +12,24 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Text(model.title),
+        backgroundColor: AppColors.bg,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: model.selectedIndex,
-          onTap: model.onItemTapped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.call),
-              label: 'Calls',
+        drawer: Drawer(),
+        body: Column(
+          children: [
+            SvgPicture.asset(
+              'lib/assets/images/hero.svg',
+              semanticsLabel: 'Acme Logo',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
+            const SizedBox(
+              height: 10,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chats',
+            AppText(
+              text: "Hello dear voters",
+              color: Colors.white,
             ),
           ],
         ),
