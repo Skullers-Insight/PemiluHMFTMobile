@@ -18,20 +18,20 @@ class HomeView extends StatelessWidget {
           elevation: 0,
         ),
         drawer: Drawer(),
-        body: Column(
-          children: [
-            SvgPicture.asset(
-              'lib/assets/images/hero.svg',
-              semanticsLabel: 'Acme Logo',
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            AppText(
-              text: "Hello dear voters",
-              color: Colors.white,
-            ),
-          ],
+        body: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SvgPicture.asset(
+                'lib/assets/images/hero.svg',
+                semanticsLabel: 'Pemilu HMFT',
+              ),
+              AppText(
+                text: "Welcome Skullers",
+                color: AppColors.fontPrimary,
+              ),
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => HomeViewModel(),
