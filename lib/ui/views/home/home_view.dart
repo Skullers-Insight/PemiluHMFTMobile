@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pemilu_mobile/ui/views/home/home_viewmodel.dart';
@@ -15,6 +17,8 @@ class HomeView extends StatelessWidget {
         Future.delayed(const Duration(milliseconds: 500), () {
           model.revealHero();
         });
+        Timer.periodic(const Duration(milliseconds: 10),
+            (Timer t) => model.afterRevealAnimation());
       },
       builder: (context, model, child) => Scaffold(
         backgroundColor: AppColors.bg,
@@ -29,17 +33,6 @@ class HomeView extends StatelessWidget {
             child: Column(
               children: [
                 Hero(model: model),
-                AppText(
-                  text: model.opacity.toString(),
-                  color: AppColors.fontPrimary,
-                  size: 20,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: 20,
-                  height: 3,
-                  color: Colors.amber,
-                ),
               ],
             ),
           ),
@@ -59,35 +52,45 @@ class Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
+        SvgPicture.asset(
+          'lib/assets/svg/hero.svg',
+          semanticsLabel: 'Pemilu HMFT',
+          height: 150,
+        ),
         AnimatedOpacity(
           opacity: model.opacity,
           duration: const Duration(seconds: 1),
-          child: SvgPicture.asset(
-            'lib/assets/images/hero.svg',
-            semanticsLabel: 'Pemilu HMFT',
-          ),
-        ),
-        AnimatedPositioned(
-          left: model.squareAxis.x,
-          top: model.squareAxis.y,
-          duration: const Duration(seconds: 1),
-          child: Container(
-            width: 100.0,
-            height: 80.0,
-            decoration: BoxDecoration(color: Colors.red),
-            child: Text('hello'),
-          ),
-        ),
-        Positioned(
-          right: 30.0,
-          top: 30.0,
-          child: Container(
-            width: 100.0,
-            height: 80.0,
-            decoration: BoxDecoration(color: Colors.red),
-            child: Text('hello'),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SvgPicture.asset(
+                'lib/assets/svg/mask.svg',
+                semanticsLabel: 'Pemilu HMFT',
+                height: 300,
+              ),
+              Positioned(
+                bottom: 0,
+                child: Align(
+                  child: Column(
+                    children: [
+                      AppText(
+                        text: "Welcome Skullers!",
+                        color: AppColors.fontPrimary,
+                        size: 20,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        width: 20,
+                        height: 3,
+                        color: AppColors.secondary,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
